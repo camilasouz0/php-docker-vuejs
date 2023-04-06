@@ -16,18 +16,18 @@
             <Navbar></Navbar>
             <div class="content">
                 <div class="row">
-                   <div class="col-md-12">
+                    <div class="col-md-12">
                         <div class="card card-user">
                             <div class="card-header">
-                                <h5 class="card-title">Cadastro tipo de grupo</h5>
+                                <h5 class="card-title">Cadastro Tipo de Grupo</h5>
                             </div>
                             <div class="card-body">
-                                <form>
+                                <form method="post" @submit.prevent="salvarGrupo($event)" id="grupo-form">
                                     <div class="row">
                                         <div class="col-md-5">
                                             <div class="form-group">
-                                                <label>Company</label>
-                                                <input type="text" class="form-control border-input" placeholder="Nome">
+                                                <label>Companhia</label>
+                                                <input type="text" class="form-control border-input" id="name" required v-model="form.name" placeholder="Nome">
                                             </div>
                                         </div>
                                     </div>
@@ -36,7 +36,7 @@
                                         <div class="row">
                                             <div class="col-md-3">
                                                 <div class="form-group">
-                                                    <button type="button" @click="redirectBack()" class="btn btn-secondary btn-fill btn-wd">Voltar</button>
+                                                    <button type="button" @click="redirectBack()" class="btn btn-default btn-fill btn-wd">Voltar</button>
                                                     <button type="submit" class="btn btn-info btn-fill btn-wd">Atualizar</button>
                                                 </div>
                                             </div>
@@ -45,6 +45,17 @@
                                 </form>
                             </div>
                         </div>
+
+                        <div class="card card-user">
+                            <div class="card-body">
+                                <form method="post" @submit.prevent="salvarGrupo($event)">
+                                    <div class="row">
+                                        <div id="lista-grupo"></div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                                        
                     </div>
                 </div>
             </div>
@@ -58,8 +69,13 @@
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 <script src="https://unpkg.com/vue-router@4"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.4/axios.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.all.min.js"></script>
+<script type="module" src="https://unpkg.com/browse/gridjs@6.0.6/l10n/dist/pt_BR.d.ts"></script>
+<script src="https://cdn.jsdelivr.net/npm/gridjs/dist/gridjs.umd.js"></script>
 
 <script type="module">
+    import { Grid, html } from "https://unpkg.com/gridjs?module";
+    var exports = {};
     const { createApp } = Vue;
     import Sidebar from './site/sidebar.js';
     import Navbar from './site/nav.js';
@@ -90,13 +106,82 @@
     const app = createApp({
         data() {
             return {
+                form: {
+                    name: null,
+                },
             }
+        },
+        mounted() {
+             new Grid({
+                columns: [
+                    {
+                    name: "#",
+                        formatter: (cell) => { return '#'},
+                        width: "10%"
+                    },
+                    {
+                    name: 'Nome',
+                        formatter: (cell) => { return cell != null ? `${cell}` : '';},
+                    },
+                    {
+                    name: 'Ações',
+                        formatter: (cell, row) => html(`
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <button type="button" class="btn btn-primary ml-1 mb-1"><i class="fa fa-eye"></i> Ver</button>
+                                    <button type="button" class="btn btn-info ml-1 mb-1"><i class="fa fa-edit"></i> Editar</button>
+                                </div>
+                            </div>
+                        `),
+                    },
+                ],
+                sort: true,
+                search: true,
+                pagination: {
+                    limit: 5,
+                },
+                server: {
+                    url: '/index.php/grupo/lista?',
+                        then (data) {
+                            for(let i=0; i < document.querySelectorAll("#lista-grupo > div > div.gridjs-footer > div > div.gridjs-pages > button").length; i++){
+                                document.querySelectorAll("#lista-grupo > div > div.gridjs-footer > div > div.gridjs-pages > button")[i].setAttribute('type', 'button');
+                            }
+                            if(data) {
+                                return JSON.parse(data).map(item => [
+                                    item.id,
+                                    item.name,
+                                ])
+                            }
+                        }
+                    },
+                    total (data) {
+                        return data.length;
+                    },
+                },
+            ).render(document.getElementById("lista-grupo"));
         },
         methods: {
+            salvarGrupo() {
+                let dado = this.form;
+                axios.post('/index.php/grupo/create',btoa(JSON.stringify(dado)))
+                .then(response => {
+                    document.getElementById('grupo-form').reset();
+                    Swal.fire({
+                        title: "Sucesso!",
+                        text: 'Cadastro realizado com sucesso!',
+                        timer: 15000,
+                        icon: 'success',
+                        buttons: true
+                    });
+                })
+            },
             redirectBack() {
                 return history.go(-1);
+            },
+            gridLista() {
+                
             }
-        },
+        }
     })
     app.component('Sidebar', Sidebar)
     app.component('Navbar', Navbar)

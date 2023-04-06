@@ -1,5 +1,6 @@
-<?php 
+<?php
 
+use App\Controllers\GroupController;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
 
@@ -18,3 +19,7 @@ $routes->add('product.lista.um',
       array('controller' => 'ProductController', 'method'=>'listaUmAction'),
       array())
 );
+
+$routes->add('grupo', new Route(constant('URL_SUBFOLDER') . '/grupo/create', array('controller' => 'GroupController', 'method'=>'createAction'), array()));
+$routes->add('grupo.lista', new Route(constant('URL_SUBFOLDER') . '/grupo/lista', array('controller' => 'GroupController', 'method'=>'listaAction'), array()));
+

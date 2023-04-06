@@ -2,7 +2,8 @@
     <div class="sidebar-wrapper">
         <div class="logo">
             <a href="/" class="simple-text">
-                Creative Tim
+                <i class="ti-bag" style="font-size: 40px;"></i>
+                Softexpert
             </a>
         </div>
 
@@ -15,38 +16,14 @@
             </li>
             <li>
                 <a href="user.html">
-                    <i class="ti-user"></i>
-                    <p>User Profile</p>
+                    <i class="ti-shopping-cart"></i>
+                    <p>Produtos</p>
                 </a>
             </li>
             <li class="active">
                 <a href="tipo-cadastro.html">
-                    <i class="ti-plus"></i>
+                    <i class="ti-pencil-alt"></i>
                     <p>Cadastro</p>
-                </a>
-            </li>
-            <li>
-                <a href="typography.html">
-                    <i class="ti-text"></i>
-                    <p>Typography</p>
-                </a>
-            </li>
-            <li>
-                <a href="icons.html">
-                    <i class="ti-pencil-alt2"></i>
-                    <p>Icons</p>
-                </a>
-            </li>
-            <li>
-                <a href="maps.html">
-                    <i class="ti-map"></i>
-                    <p>Maps</p>
-                </a>
-            </li>
-            <li>
-                <a href="notifications.html">
-                    <i class="ti-bell"></i>
-                    <p>Notifications</p>
                 </a>
             </li>
             <li class="active-pro">

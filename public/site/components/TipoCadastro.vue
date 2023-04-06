@@ -9,7 +9,7 @@
                <form>
                   <div class="row">
                      <div class="col-md-3">
-                        <button type="button" class="btn btn-outline-primary btn-block btn-round">
+                        <button type="button" @click="redirectGroup()" class="btn btn-outline-primary btn-block btn-round">
                            <i class="fa fa-group fa-2x"></i> Grupo
                         </button>
                      </div>
