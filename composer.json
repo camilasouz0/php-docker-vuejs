@@ -1,0 +1,22 @@
+{
+    "name": "camila/teste-softexpert",
+    "require": {
+        "phpunit/phpunit": "^10.0",
+        "symfony/routing": "^6.2",
+        "symfony/http-foundation": "^6.2"
+    },
+    "authors": [
+        {
+            "name": "Camila Souza",
+            "email": "camilamaiara@hotmail.com.br"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        },
+        "classmap": [
+            "app/"
+        ]
+    }
+}

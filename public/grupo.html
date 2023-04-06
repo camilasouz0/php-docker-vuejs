@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<meta>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
+    <div include-html="./head.html"></div>
+
+    <title>Grupo</title>
+</head>
+<body>
+    <div class="wrapper" id="app">
+        <Sidebar></Sidebar>
+        <div class="main-panel">
+            <Navbar></Navbar>
+            <div class="content">
+                <div class="row">
+                   <div class="col-md-12">
+                        <div class="card card-user">
+                            <div class="card-header">
+                                <h5 class="card-title">Cadastro tipo de grupo</h5>
+                            </div>
+                            <div class="card-body">
+                                <form>
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <div class="form-group">
+                                                <label>Company</label>
+                                                <input type="text" class="form-control border-input" placeholder="Nome">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="text-left">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <button type="button" @click="redirectBack()" class="btn btn-secondary btn-fill btn-wd">Voltar</button>
+                                                    <button type="submit" class="btn btn-info btn-fill btn-wd">Atualizar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <Footerbar></Footerbar>
+</body>
+</html>
+
+<script src="./site/includeHead.js"></script>
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script src="https://unpkg.com/vue-router@4"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.4/axios.js"></script>
+
+<script type="module">
+    const { createApp } = Vue;
+    import Sidebar from './site/sidebar.js';
+    import Navbar from './site/nav.js';
+    import Footerbar from './site/footer.js';
+
+    const routes = []
+    const router = VueRouter.createRouter({
+            history: VueRouter.createWebHashHistory(),
+            routes: [
+            {
+                path: "/",
+                name: "Sidebar",
+                component: Sidebar
+            },
+            {
+                path: "/navbar",
+                name: "Navbar",
+                component: Navbar
+            },
+            {
+                path: "/footer",
+                name: "Footerbar",
+                component: Footerbar
+            },
+        ]
+    })
+
+    const app = createApp({
+        data() {
+            return {
+            }
+        },
+        methods: {
+            redirectBack() {
+                return history.go(-1);
+            }
+        },
+    })
+    app.component('Sidebar', Sidebar)
+    app.component('Navbar', Navbar)
+    app.component('Footerbar', Footerbar)
+
+    app.use(router);
+    app.mount("#app");
+</script>

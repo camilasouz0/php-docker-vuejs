@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
+    <div include-html="./head.html"></div>
+    <title>Produtos</title>
+</head>
+<body>
+    <div id="app">
+      <Sidebar></Sidebar>
+      <!-- <product></product> -->
+    </div>
+</body>
+</html>
+
+<!-- <template id="product">
+    <button @click="getProducts()">buscar</button>
+    <ul>
+        <li v-for="produto in produtos" key="produto.id">
+            {{produto['id']}}
+        </li>
+    </ul>
+</template> -->
+
+<script src="./site/includeHead.js"></script>
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script src="https://unpkg.com/vue-router@4"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.4/axios.js"></script>
+
+<script type="module">
+    const { createApp } = Vue;
+    import Sidebar from './site/sidebar.js';
+
+    const routes = []
+    const router = VueRouter.createRouter({
+            history: VueRouter.createWebHashHistory(),
+            routes: [
+            {
+                path: "/",
+                name: "Sidebar",
+                component: Sidebar
+            },
+            // {
+            //     path: "/h",
+            //     name: "H",
+            //     component: H
+            // }
+        ]
+    })
+
+    const app = createApp({
+        data() {
+            return {}
+        },
+    })
+
+//    app.component('product',{
+//       data() {
+//          return {
+//                produtos: null,
+//          }
+//       },
+//       methods: {
+//          getProducts() {
+//                console.log('aqu')
+//                axios({
+//                   url: "/lista",
+//                   method: "get",
+//                })
+//                .then((res) => {
+//                   this.produtos = res.data;
+//                })
+//                .catch((err) => {
+//                   console.log(err);
+//                });
+//          }
+//       },
+//       template: "#product",
+//     });
+   
+    app.component('Sidebar', Sidebar)
+    app.use(router);
+    app.mount("#app");
+</script>
+
