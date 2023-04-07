@@ -26,12 +26,6 @@
                     <p>Cadastro</p>
                 </a>
             </li>
-            <li class="active-pro">
-                <a href="upgrade.html">
-                    <i class="ti-export"></i>
-                    <p>Upgrade to PRO</p>
-                </a>
-            </li>
         </ul>
     </div>
 </div>

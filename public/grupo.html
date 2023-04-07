@@ -14,56 +14,60 @@
         <Sidebar></Sidebar>
         <div class="main-panel">
             <Navbar></Navbar>
-            <div class="content">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card card-user">
-                            <div class="card-header">
-                                <h5 class="card-title">Cadastro Tipo de Grupo</h5>
-                            </div>
-                            <div class="card-body">
-                                <form method="post" @submit.prevent="salvarGrupo($event)" id="grupo-form">
-                                    <div class="row">
-                                        <div class="col-md-5">
-                                            <div class="form-group">
-                                                <label>Nome</label>
-                                                <input type="text" class="form-control border-input" id="name" required v-model="form.name" placeholder="Nome">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="text-left">
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <div class="form-group">
-                                                    <button type="button" @click="redirectBack()" class="btn btn-default btn-fill btn-wd">Voltar</button>
-                                                    <button type="submit" class="btn btn-info btn-fill btn-wd">Atualizar</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-
-                        <div class="card card-user">
-                            <div class="card-body">
-                                <form method="post" @submit.prevent="salvarGrupo($event)">
-                                    <div class="row">
-                                        <div id="lista-grupo"></div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                                        
-                    </div>
-                </div>
-            </div>
+            <Group></Group>
         </div>
     </div>
     <Footerbar></Footerbar>
 </body>
 </html>
+
+<template id="group">
+    <div class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-user">
+                    <div class="card-header">
+                        <h5 class="card-title">Cadastro Tipo de Grupo</h5>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" @submit.prevent="salvarGrupo($event)" id="grupo-form">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <label>Nome</label>
+                                        <input type="text" class="form-control border-input" id="name" required v-model="form.name" placeholder="Nome">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="text-left">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <button type="button" @click="redirectBack()" class="btn btn-default btn-fill btn-wd">Voltar</button>
+                                            <button type="submit" class="btn btn-info btn-fill btn-wd">Atualizar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="card card-user">
+                    <div class="card-body">
+                        <form method="post" @submit.prevent="salvarGrupo($event)">
+                            <div class="row">
+                                <div id="lista-grupo"></div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                                
+            </div>
+        </div>
+    </div>
+</template>
 
 <script src="./site/includeHead.js"></script>
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
@@ -104,6 +108,15 @@
     const app = createApp({
         data() {
             return {
+                form: {},
+            }
+        },
+    })
+    app.component('Sidebar', Sidebar)
+    app.component('Navbar', Navbar)
+    app.component('Group',{
+        data() {
+            return {
                 form: {
                     name: null,
                 },
@@ -118,8 +131,10 @@
                         'pagination': {
                         'previous': '⬅️',
                         'next': '➡️',
-                        'showing': '😃 Displaying',
-                        'results': () => 'Records'
+                        'showing': '😃 Mostrando',
+                        'results': () => 'resultados',
+                        'to' : 'de',
+                        'of': 'até'
                     }
                 },
                 columns: [
@@ -187,10 +202,9 @@
             redirectBack() {
                 return history.go(-1);
             },
-        }
-    })
-    app.component('Sidebar', Sidebar)
-    app.component('Navbar', Navbar)
+        },
+        template: "#group",
+    });
     app.component('Footerbar', Footerbar)
 
     app.use(router);
