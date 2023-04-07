@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\Product;
+use PhpParser\Node\Expr\Cast\Double;
 use Symfony\Component\Routing\RouteCollection;
 
 class ProductController
@@ -27,14 +28,14 @@ class ProductController
     {
         $json = base64_decode(array_keys($_POST)[0]);
         $request = json_decode($json);
-
+        
         $this->product->create(
             array(
                 'groups_id' => $request->groups_id,
-                'description' => $request->description,
-                'category_groups_id' => $request->category_groups_id,
-                'value' => $request->value,
-                'img' => $request->img
+                'description' => isset($request->description) && !empty($request->description) ? $request->description : 'null',
+                'category_products_id' => $request->category_products_id,
+                'value' => isset($request->value) && !empty($request->value) ? (Double)$request->value : 'null',
+                'img' => isset($request->img) && !empty($request->img) ? $request->img : 'null'
             )
         );
     }

@@ -71,8 +71,15 @@ class Product
     {
         $table = $this->table;
         $keys = implode(",", array_keys($data));
-        $values = implode(",", array_values($data));
-        $this->database->query("INSERT INTO $table($keys) VALUES($values)");
+        $values = array_map(function($value) {
+            if(!is_numeric($value) && $value != 'null') {
+                return "'".$value."'";
+            }
+            return $value;
+        }, array_values($data));
+
+        $valuesmaped = implode(',', $values);
+        $this->database->query("INSERT INTO $table($keys) VALUES($valuesmaped)");
         $this->database->getQuery()->execute();
     }
 
