@@ -3,7 +3,6 @@
 namespace App\Controllers;
 
 use App\Models\Groups;
-use PHPUnit\Util\Json;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouteCollection;
 
@@ -28,7 +27,6 @@ class GroupController
     public function listaAction(RouteCollection $routes)
     {
         $data = $this->groups->selectAll();
-
         echo json_encode($data);
     }
 }

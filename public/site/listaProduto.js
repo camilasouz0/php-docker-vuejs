@@ -8,7 +8,7 @@ async function importTemplate(name) {
  
 export default {
     props: {
-        search: { type: String },
+        search: { type: Boolean },
     },
     data() {
         return { }
@@ -39,6 +39,26 @@ export default {
                     formatter: (cell) => { return cell != null ? `${cell}` : '';},
                 },
                 {
+                name: 'Código',
+                    formatter: (cell) => { return cell != null ? `${cell}` : '';},
+                },
+                {
+                name: 'Preço',
+                    formatter: (cell) => { return cell != null ? `${cell}` : '';},
+                },
+                {
+                name: 'Imposto',
+                    formatter: (cell) => { return cell != null ? `${cell}` : '';},
+                },
+                {
+                name: 'Imagem',
+                    formatter: (cell) => { return cell != null ? `${cell}` : '';},
+                },
+                {
+                name: 'Ativo',
+                    formatter: (cell) => { return cell != null ? `${cell}` : '';},
+                },
+                {
                 name: 'Ações',
                     formatter: (cell, row) => html(`
                         <div class="row">
@@ -65,6 +85,11 @@ export default {
                             return JSON.parse(data).map(item => [
                                 item.id,
                                 item.name,
+                                item.id,
+                                item.id,
+                                item.id,
+                                item.id,
+                                item.id,
                                 item.id
                             ])
                         }
