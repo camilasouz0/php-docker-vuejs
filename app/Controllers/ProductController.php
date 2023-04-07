@@ -4,7 +4,6 @@ namespace App\Controllers;
 
 use App\Models\Product;
 use Symfony\Component\Routing\RouteCollection;
-use App\Classes\Database;
 
 class ProductController
 {
@@ -15,15 +14,9 @@ class ProductController
         $this->product = new Product();
     }
 
-	public function showAction(int $id, RouteCollection $routes)
-	{   
-        // require_once APP_ROOT . '/views/components/scripts.php';
-        // require_once APP_ROOT . '/views/components/sidebar.php';
-        require_once APP_ROOT . './views/product.php';
-	}
-
-    public function listaTodosAction(RouteCollection $routes) {
-        echo $this->product->selectAll();
+    public function listaAction(RouteCollection $routes) {
+        $data = $this->product->selectAll();
+        echo json_encode($data);
     }
 
     public function listaUmAction($id, RouteCollection $routes) {

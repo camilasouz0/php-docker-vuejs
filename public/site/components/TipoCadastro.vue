@@ -3,7 +3,7 @@
       <div class="col-md-12">
          <div class="card card-user">
             <div class="card-header">
-               <h5 class="card-title">Edit Profile</h5>
+               <h5 class="card-title">Tipo de Cadastro</h5>
             </div>
             <div class="card-body">
                <form>
@@ -22,17 +22,6 @@
                         <button type="button" class="btn btn-outline-primary btn-block btn-round">
                            <i class="fa-solid fa-money-check-dollar"></i> Motivo deson. ICMS
                         </button>
-                     </div>
-                  </div>
-                  <div class="row">
-                     <div class="col-md-3">
-                        <button class="btn btn-default btn-block" onclick="demo.showNotification('bottom','left')">Bottom Left</button>
-                     </div>
-                     <div class="col-md-3">
-                        <button class="btn btn-default btn-block" onclick="demo.showNotification('bottom','center')">Bottom Center</button>
-                     </div>
-                     <div class="col-md-3">
-                        <button class="btn btn-default btn-block" onclick="demo.showNotification('bottom','right')">Bottom Right</button>
                      </div>
                   </div>
                </form>

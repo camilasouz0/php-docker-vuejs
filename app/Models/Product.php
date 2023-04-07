@@ -40,11 +40,6 @@ class Product
         return $this->price;
     }
 
-    public function getSku()
-    {
-        return $this->sku;
-    }
-
     public function getImage()
     {
         return $this->image;
@@ -64,11 +59,6 @@ class Product
     public function setPrice(string $price)
     {
         $this->price = $price;
-    }
-
-    public function setSku(string $sku)
-    {
-        $this->sku = $sku;
     }
 
     public function setImage(string $image)

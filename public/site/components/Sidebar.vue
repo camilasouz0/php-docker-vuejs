@@ -15,7 +15,7 @@
                 </a>
             </li>
             <li>
-                <a href="user.html">
+                <a href="produto.html">
                     <i class="ti-shopping-cart"></i>
                     <p>Produtos</p>
                 </a>

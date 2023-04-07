@@ -9,8 +9,8 @@ $routes->add('homepage', new Route(constant('URL_SUBFOLDER') . '/', array('contr
 $routes->add('product', new Route(constant('URL_SUBFOLDER') . '/product/{id}', array('controller' => 'ProductController', 'method'=>'showAction'), array('id' => '[0-9]+')));
 
 $routes->add('product.lista',
-      new Route(constant('URL_SUBFOLDER') . '/lista',
-      array('controller' => 'ProductController', 'method'=>'listaTodosAction'),
+      new Route(constant('URL_SUBFOLDER') . '/produto/lista',
+      array('controller' => 'ProductController', 'method'=>'listaAction'),
       array())
 );
 

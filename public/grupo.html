@@ -26,7 +26,7 @@
                                     <div class="row">
                                         <div class="col-md-5">
                                             <div class="form-group">
-                                                <label>Companhia</label>
+                                                <label>Nome</label>
                                                 <input type="text" class="form-control border-input" id="name" required v-model="form.name" placeholder="Nome">
                                             </div>
                                         </div>
@@ -70,8 +70,6 @@
 <script src="https://unpkg.com/vue-router@4"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.4/axios.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.all.min.js"></script>
-<script type="module" src="https://unpkg.com/browse/gridjs@6.0.6/l10n/dist/pt_BR.d.ts"></script>
-<script src="https://cdn.jsdelivr.net/npm/gridjs/dist/gridjs.umd.js"></script>
 
 <script type="module">
     import { Grid, html } from "https://unpkg.com/gridjs?module";
@@ -113,6 +111,17 @@
         },
         mounted() {
              new Grid({
+                language: {
+                    'search': {
+                        'placeholder': '🔍 Search...'
+                    },
+                        'pagination': {
+                        'previous': '⬅️',
+                        'next': '➡️',
+                        'showing': '😃 Displaying',
+                        'results': () => 'Records'
+                    }
+                },
                 columns: [
                     {
                     name: "#",
@@ -178,9 +187,6 @@
             redirectBack() {
                 return history.go(-1);
             },
-            gridLista() {
-                
-            }
         }
     })
     app.component('Sidebar', Sidebar)
