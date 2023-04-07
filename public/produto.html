@@ -30,12 +30,12 @@
                         <h5 class="card-title">Cadastro de Produtos</h5>
                     </div>
                     <div class="card-body">
-                        <form method="post" @submit.prevent="salvarProduto($event)" id="grupo-form">
+                        <form method="post" @submit.prevent="salvar($event)" enctype="multipart/form-data">
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Grupo</label>
-                                        <select class="form-control" id="groups_id" v-model="form.groups_id" required>
+                                        <select class="form-control" id="groups_id" v-model="form.groups_id" >
                                             <option value=""></option>
                                             <option v-for="item in jsonGroups" :key="item.id" :value="item.id"
                                               :selected="form.groups_id === item.name">
@@ -47,13 +47,13 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Descrição</label>
-                                        <input type="text" class="form-control border-input" id="description" required v-model="form.description" placeholder="Descrição">
+                                        <input type="text" class="form-control border-input" id="description"  v-model="form.description" placeholder="Descrição">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Código</label>
-                                        <input type="number" class="form-control border-input" id="code" required v-model="form.code" placeholder="Codigo">
+                                        <input type="number" class="form-control border-input" id="code"  v-model="form.code" placeholder="Codigo">
                                     </div>
                                 </div>
                             </div>
@@ -61,7 +61,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Categoria</label>
-                                        <select class="form-control" id="category_groups_id" required v-model="form.category_groups_id">
+                                        <select class="form-control" id="category_groups_id"  v-model="form.category_groups_id">
                                             <option value=""></option>
                                             <option v-for="item in jsonGroups" :key="item.id" :value="item.id"
                                               :selected="form.category_groups_id === item.name">
@@ -73,13 +73,13 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Preço</label>
-                                        <input type="number" class="form-control border-input" id="value" required v-model="form.value" placeholder="Preço">
+                                        <input type="number" class="form-control border-input" id="value"  v-model="form.value" placeholder="Preço">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Tributação</label>
-                                        <select class="form-control" id="groups_id" v-model="form.groups_id" required>
+                                        <select class="form-control" id="groups_id" v-model="form.groups_id" >
                                             <option value=""></option>
                                             <option v-for="item in jsonGroups" :key="item.id" :value="item.id"
                                               :selected="form.groups_id === item.name">
@@ -89,19 +89,8 @@
                                     </div>
                                 </div>
                                 <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Imagem</label>
-                                        <div class="fileinput fileinput-new text-center" data-provides="fileinput">
-                                            <div class="fileinput-preview fileinput-exists thumbnail img-raised"></div>
-                                            <div>
-                                                <span class="btn btn-default border">
-                                                    <span class="fileinput-new">Selecione a imagem</span>
-                                                    <input type="file" name="..." />
-                                                </span>
-                                                <a href="javascript:;" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <label for="img">Imagem</label>
+                                    <input type="file" class="form-control" id="img" @change="onInputChange($event)" @input="form.uploadImagem = $event.target" aria-describedby="img" aria-label="Upload">
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
@@ -154,6 +143,7 @@
 <script type="module">
     var exports = {};
     const { createApp, ref } = Vue;
+    const files = ref([]);
     import Sidebar from './site/sidebar.js';
     import Navbar from './site/nav.js';
     import Footerbar from './site/footer.js';
@@ -203,13 +193,91 @@
         data() {
             return {
                 form: {
-                    groups_id: null,
+                    groups_id: 1,
                     description: null,
-                    category_groups_id: null,
+                    category_groups_id: 1,
                     value: null,
-                    img: null,
+                    img: [],
                 },
-                jsonGroups: [],
+                uploadImagem: [],
+                jsonGroups: []
+            }
+        },
+        methods: {
+            formatBytes(bytes, decimals = 2) {
+                if (bytes === 0) return '0 Bytes';
+                let k = 1024;
+                let dm = decimals < 0 ? 0 : decimals;
+                let sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+                let i = Math.floor(Math.log(bytes) / Math.log(k));
+                return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+            },
+            sizeUpload(file) {
+                for (let i = 0; i < file.length; i++) {
+                    if(this.formatBytes(file[i].size).split(' ')[1] != 'KB' && (this.formatBytes(file[i].size).split(' ')[0] > this.formatBytes(parseFloat(5000)).split(' ')[0])) {
+                        dialog.alertErrors(`Tamanho máximo permitido: 5.3 MB`,"", "error");
+                        return false;
+                        break;
+                    } else {
+                        return true;
+                    }
+                }
+            },
+            extensionUpload(file) {
+                let extPermitidas = ['png', 'jpg', 'jpeg', 'webp'];
+
+                let arrayExt = [];
+                for (let i = 0; i < file.length; i++) {
+                    arrayExt += file[i].name.split('.').pop()+',';
+                }
+
+                let array = arrayExt.split(',')
+
+                let r3 =[];
+                array.forEach(function (element, index, array) {
+                    if(extPermitidas.indexOf(element) == -1)
+                        r3.push(element);
+                });
+
+                if(r3.length == 1) {
+                    return true;
+                } else {
+                    dialog.alertErrors(`Insira um arquivo com extensão png, jpg, jpeg ou webp.`,"", "error");
+                    return false;
+                }
+            },
+            onInputChange() {
+                if(this.sizeUpload(event.target.files) && this.extensionUpload(event.target.files)) {
+                    const reader = new FileReader()
+                    reader.readAsDataURL(event.target.files[0])
+                    reader.onload = e => {
+                        this.form.img = e.target.result
+                        console.log(this.form.img)
+                    }
+                    event.target.value = null
+                }
+            },
+            salvar() {
+                let dado = this.form;
+                console.log(dado)
+                if(this.form.groups_id != null && this.form.category_groups_id) {
+                    axios.post('/index.php/produto/create',btoa(JSON.stringify(dado)))
+                    .then(response => {
+                        Swal.fire({
+                            title: "Sucesso!",
+                            text: 'Cadastro realizado com sucesso!',
+                            timer: 15000,
+                            icon: 'success',
+                        });
+                    })
+                } else {
+                    Swal.fire({
+                        title: "Erro!",
+                        text: 'Erro ao realizar cadastro',
+                        timer: 15000,
+                        icon: 'warning',
+                    });
+                }
             }
         },
         template: "#product",

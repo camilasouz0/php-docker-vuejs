@@ -23,10 +23,19 @@ class ProductController
         echo $this->product->select($id);
     }
 
-    public function createAction(array $data)
+    public function createAction(RouteCollection $routes)
     {
-        $this->product->create(array());
-    
-        return $this;
+        $json = base64_decode(array_keys($_POST)[0]);
+        $request = json_decode($json);
+
+        $this->product->create(
+            array(
+                'groups_id' => $request->groups_id,
+                'description' => $request->description,
+                'category_groups_id' => $request->category_groups_id,
+                'value' => $request->value,
+                'img' => $request->img
+            )
+        );
     }
 }

@@ -14,8 +14,8 @@
                         </button>
                      </div>
                      <div class="col-md-3">
-                        <button type="button" class="btn btn-outline-primary btn-block btn-round">
-                           <i class="fa fa-archive fa-2x"></i> Tipo de produto
+                        <button type="button" @click="redirectCategoria()" class="btn btn-outline-primary btn-block btn-round">
+                           <i class="fa fa-archive fa-2x"></i> Categoria
                         </button>
                      </div>
                      <div class="col-md-3">

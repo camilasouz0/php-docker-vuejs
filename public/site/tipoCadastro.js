@@ -11,6 +11,9 @@ export default {
    methods: {
       redirectGroup() {
          return window.location.href = '/grupo.html'
+      },
+      redirectCategoria() {
+         return window.location.href = '/categoria.html'
       }
    },
    template: await importTemplate('site/components/TipoCadastro.vue')
