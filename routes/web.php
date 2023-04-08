@@ -5,7 +5,6 @@ use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
 
 $routes = new RouteCollection();
-// $routes->add('homepage', new Route(constant('URL_SUBFOLDER') . '/', array('controller' => 'PageController', 'method'=>'indexAction'), array()));
 $routes->add('product', new Route(constant('URL_SUBFOLDER') . '/product/{id}', array('controller' => 'ProductController', 'method'=>'showAction'), array('id' => '[0-9]+')));
 
 $routes->add('product.lista',
@@ -20,6 +19,7 @@ $routes->add('product.lista.um',
       array())
 );
 $routes->add('produto.create', new Route(constant('URL_SUBFOLDER') . '/produto/create', array('controller' => 'ProductController', 'method'=>'createAction'), array()));
+$routes->add('produto.update', new Route(constant('URL_SUBFOLDER') . '/produto/update', array('controller' => 'ProductController', 'method'=>'updateAction'), array('id' => '[0-9]+')));
 
 $routes->add('grupo', new Route(constant('URL_SUBFOLDER') . '/grupo/create', array('controller' => 'GroupController', 'method'=>'createAction'), array()));
 $routes->add('grupo.lista', new Route(constant('URL_SUBFOLDER') . '/grupo/lista', array('controller' => 'GroupController', 'method'=>'listaAction'), array()));

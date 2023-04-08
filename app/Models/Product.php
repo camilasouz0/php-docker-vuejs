@@ -77,7 +77,6 @@ class Product
             }
             return $value;
         }, array_values($data));
-
         $valuesmaped = implode(',', $values);
         $this->database->query("INSERT INTO $table($keys) VALUES($valuesmaped)");
         $this->database->getQuery()->execute();
@@ -93,14 +92,22 @@ class Product
     public function selectAll(): string
     {
         $table = $this->table;
-        $this->database->query("SELECT * from $table");
+        $this->database->query("SELECT * from $table ORDER BY id DESC");
         return json_encode($this->database->resultset());
     }
 
 
-    public function update(int $id, array $data)
+    public function update(int $id)
     {
+        $table = $this->table;
 
+        $item = $this->select($id);
+        if(json_decode($item)->active == true) {
+            $this->database->query("UPDATE $table SET active = 'false' WHERE id = $id");
+        } else {
+            $this->database->query("UPDATE $table SET active = 'true' WHERE id = $id");
+        }
+        return json_encode($this->database->resultset());
     }
 
     public function delete(int $id)

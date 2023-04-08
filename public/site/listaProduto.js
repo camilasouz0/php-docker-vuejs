@@ -14,7 +14,7 @@ export default {
         return { }
     },
     mounted() {
-        new Grid({
+        this.gridjs = new Grid({
             language: {
                 'search': {
                     'placeholder': '🔍 Search...'
@@ -30,9 +30,8 @@ export default {
             },
             columns: [
                 {
-                name: "#",
-                    formatter: (cell) => { return '#'},
-                    width: "10%"
+                    name: 'id',
+                    hidden: true
                 },
                 {
                 name: 'Nome',
@@ -52,20 +51,40 @@ export default {
                 },
                 {
                 name: 'Imagem',
-                    formatter: (cell) => { return cell != null ? `${cell}` : '';},
+                    formatter: (cell) => html(`
+                        <img src="${cell}" width="100">
+                    `),
                 },
                 {
                 name: 'Ativo',
-                    formatter: (cell) => { return cell != null ? `${cell}` : '';},
+                    formatter (cell) {
+                        if(cell == 1) {
+                        return html(`
+                        <label class="toggle-switchy">
+                            <input type="checkbox" checked>
+                            <span class="toggle checkbox-${cell}">
+                            <span class="switch"></span>
+                            </span>
+                        </label>
+                        `)
+                        } else {
+                        return html(`
+                        <label class="toggle-switchy">
+                            <input type="checkbox" class="id-${cell}">
+                            <span class="toggle checkbox-${cell}">
+                            <span class="switch"></span>
+                            </span>
+                        </label>
+                        `)
+                        }
+                    }
                 },
                 {
                 name: 'Ações',
                     formatter: (cell, row) => html(`
-                        <div class="row">
-                            <div class="col-md-3">
-                                <button type="button" class="btn btn-primary ml-1 mb-1"><i class="fa fa-eye"></i> Ver</button>
-                                <button type="button" class="btn btn-info ml-1 mb-1"><i class="fa fa-edit"></i> Editar</button>
-                            </div>
+                        <div class="row col-10">
+                            <button type="button" class="btn btn-primary mb-1"><i class="fa fa-eye"></i> Ver</button>
+                            <button type="button" class="btn btn-info mb-1"><i class="fa fa-edit"></i> Editar</button>
                         </div>
                     `),
                 },
@@ -85,10 +104,10 @@ export default {
                             return JSON.parse(data).map(item => [
                                 item.id,
                                 item.name,
+                                item.code,
+                                item.value,
                                 item.id,
-                                item.id,
-                                item.id,
-                                item.id,
+                                item.img,
                                 item.id,
                                 item.id
                             ])
@@ -100,6 +119,27 @@ export default {
                 },
             },
         ).render(document.getElementById("lista-grupo"));
+
+        const grid = this.gridjs;
+
+        this.gridjs.on('cellClick', function (args, param) {
+            if(args.target.classList.length > 1) {
+                let id = args.target.classList[1].split('-')[1]
+                console.log(id,args.target.classList[1].split('-'))
+                axios.get('/index.php/produto/update?id='+id)
+                .then(response => {
+                    if(response) {
+                        // grid.forceRender();
+                        Swal.fire({
+                            title: "Sucesso!",
+                            timer: 15000,
+                            icon: 'success',
+                        });
+                    }
+                }).then(function (response) {
+                })
+            }
+        });
     },
     template: await importTemplate('site/components/ListaProduto.vue')
 }
