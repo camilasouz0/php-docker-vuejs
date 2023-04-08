@@ -1,7 +1,6 @@
 <?php
 
 namespace Config;
-
 define("DB_CONNECTION", "pgsql");
 define("DB_HOST", "127.0.0.1");
 define("DB_PORT", "5432");
@@ -18,6 +17,8 @@ define('URL_ROOT', '/');
 define('URL_SUBFOLDER', '');
 define("VIEWS_PATH", "./../");
 define('SITE_HOST', 'http://teste-softexpert.test/');
+
+error_reporting(E_ALL & ~E_STRICT & ~E_DEPRECATED);
 class Config {
    public function __construct(){   }
 

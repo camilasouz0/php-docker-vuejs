@@ -21,8 +21,9 @@ class ImpostoController
     {
         $json = base64_decode(array_keys($_POST)[0]);
         $request = json_decode($json);
-
-        $this->imposto->create((array('value' => $request->value)));
+        if(isset($request->value)) {
+            $this->imposto->create(array('value' => $request->value));
+        }
     }
 
     public function listaAction(RouteCollection $routes)

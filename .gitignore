@@ -1,3 +1,5 @@
 /vendor/
 package-lock.json
 composer.lock
+test-reports
+test-results

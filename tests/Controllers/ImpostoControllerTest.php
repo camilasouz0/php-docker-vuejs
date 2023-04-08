@@ -2,39 +2,40 @@
 namespace Tests\Feature\Controllers;
 require_once './config/config.php';
 
-use App\Controllers\GroupController;
-use App\Models\Groups;
+use App\Controllers\ImpostoController;
+use App\Models\Imposto;
 use GuzzleHttp\Client;
-use GuzzleHttp\Psr7\ServerRequest;
 use \PHPUnit\Framework\TestCase;
 use Symfony\Component\Routing\RouteCollection;
-class GroupControllerTest extends TestCase
+
+class ImpostoControllerTest extends TestCase
 {
     protected $controller;
-    protected $groups;
+    protected $imposto;
     protected $http;
 
     public function setUp(): void
     {
         parent::setUp();
-        $this->controller = new GroupController();
-        $this->groups = new Groups();
+        $this->controller = new ImpostoController();
+        $this->imposto = new Imposto();
         $this->http = new Client(['base_uri' => SITE_HOST]);
     }
 
     public function test_create_action()
     {
-        $response = $this->http->request('POST', '/index.php/grupo/create', [
-                'form_params' => ['name' => 'teste']
+        $response = $this->http->request('POST', '/index.php/imposto/create', [
+                'form_params' => ['value' => 10.0],
             ]
         );
+
         $this->assertEquals(200, $response->getStatusCode());
         $this->controller->createAction(new RouteCollection);
         $this->assertTrue(true);
     }
 
     public function test_lista_action() {
-        $response = $this->http->request('POST', '/index.php/grupo/lista');
+        $response = $this->http->request('POST', '/index.php/imposto/lista');
         $this->assertEquals(200, $response->getStatusCode());
         $this->expectOutputRegex('/./');
         $this->controller->listaAction(new RouteCollection);

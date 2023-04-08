@@ -27,6 +27,6 @@ $routes->add('grupo.lista', new Route(constant('URL_SUBFOLDER') . '/grupo/lista'
 $routes->add('categoria', new Route(constant('URL_SUBFOLDER') . '/categoria/create', array('controller' => 'CategoryController', 'method'=>'createAction'), array()));
 $routes->add('categoria.lista', new Route(constant('URL_SUBFOLDER') . '/categoria/lista', array('controller' => 'CategoryController', 'method'=>'listaAction'), array()));
 
-$routes->add('imposto', new Route(constant('URL_SUBFOLDER') . '/imposto/create', array('controller' => 'ImpostoController', 'method'=>'createAction'), array()));
+$routes->add('imposto.create', new Route(constant('URL_SUBFOLDER') . '/imposto/create', array('controller' => 'ImpostoController', 'method'=>'createAction'), array()));
 $routes->add('imposto.lista', new Route(constant('URL_SUBFOLDER') . '/imposto/lista', array('controller' => 'ImpostoController', 'method'=>'listaAction'), array()));
 

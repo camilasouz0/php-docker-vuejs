@@ -30,6 +30,11 @@
     O dump encontra-se na raiz do projeto mydb.sql
 ### Iniciar o projeto
     $ php -S localhost:8080 public/index.php
+
+### Testes unitários
+    $ vendor\bin\phpunit
+
+    Acesse o arquivo no navegador {caminho-seu-computador}\coverage\index.html para visualizar
 ### TECNOLOGIAS UTILIZADAS
 
 | Tecnologia            | Descrição                                               |
@@ -50,6 +55,6 @@
 [Axios]: https://axios-http.com/ptbr/docs/intro
 [Sweetalert]: https://sweetalert2.github.io
 
-### SOBRE O AUTOR
+### Sobre o autor
     Sou desenvolvedora Full Stack
     Camila Mayara Cardoso de Souza - camilamayaracardoso20@gmail.com
