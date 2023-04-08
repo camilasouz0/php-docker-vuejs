@@ -3,9 +3,9 @@ namespace App\Models;
 
 use App\Classes\Database;
 
-class Category
+class Imposto
 {
-    protected $table = 'category_products';
+    protected $table = 'imposto';
     protected $id;
     protected $name;
     protected $image;
@@ -49,14 +49,8 @@ class Category
         $table = $this->table;
         $keys = implode(",", array_keys($data));
         $values = implode(",", array_values($data));
-        $values = array_map(function($value) {
-            if(!is_numeric($value) && $value != 'null') {
-                return "'".$value."'";
-            }
-            return $value;
-        }, array_values($data));
-        $valuesmaped = implode(',', $values);
-        $this->database->query("INSERT INTO $table($keys) VALUES($valuesmaped)");
+
+        $this->database->query("INSERT INTO $table($keys) VALUES('$values')");
         $this->database->getQuery()->execute();
     }
 
@@ -70,7 +64,7 @@ class Category
     public function selectAll(): string
     {
         $table = $this->table;
-        $this->database->query("SELECT * from $table LEFT JOIN imposto ON (imposto.id = $table.imposto_id)");
+        $this->database->query("SELECT * from $table");
         return json_encode($this->database->resultset());
     }
 

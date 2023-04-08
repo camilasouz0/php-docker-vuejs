@@ -17,9 +17,19 @@
 ### Instale as dependências
     $ composer install
 
-### O servidor inciará na porta:8080
-    - acesse http://localhost:8080
-    
+### Conexão com o banco de dados
+    Acesse config/config.php
+    define("DB_CONNECTION", "pgsql");
+    define("DB_HOST", "127.0.0.1");
+    define("DB_PORT", "5432");
+    define("DB_DATABASE", "mydb");
+    define("DB_USERNAME", "postgres");
+    define("DB_PASSWORD", "postgres");
+    define('SITE_HOST', 'http://localhost:8080');
+
+    O dump encontra-se na raiz do projeto mydb.sql
+### Iniciar o projeto
+    $ php -S localhost:8080 public/index.php
 ### TECNOLOGIAS UTILIZADAS
 
 | Tecnologia            | Descrição                                               |

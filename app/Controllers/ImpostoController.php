@@ -2,17 +2,19 @@
 
 namespace App\Controllers;
 
-use App\Models\Category;
+use App\Models\Groups;
+use App\Models\Imposto;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouteCollection;
 
 
-class CategoryController 
+class ImpostoController 
 {
-    private $category;
+    private $imposto;
 
     public function __construct()
     {
-        $this->category = new Category();
+        $this->imposto = new Imposto();
     }
 
     public function createAction(RouteCollection $routes)
@@ -20,17 +22,12 @@ class CategoryController
         $json = base64_decode(array_keys($_POST)[0]);
         $request = json_decode($json);
 
-        $this->category->create((
-            array(
-                'name' => $request->name, 
-                'imposto_id' => isset($request->imposto_id) ? $request->imposto_id : 'null'
-            )
-        ));
+        $this->imposto->create((array('value' => $request->value)));
     }
 
     public function listaAction(RouteCollection $routes)
     {
-        $data = $this->category->selectAll();
+        $data = $this->imposto->selectAll();
         echo json_encode($data);
     }
 }

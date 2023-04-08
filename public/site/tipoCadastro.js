@@ -14,6 +14,9 @@ export default {
       },
       redirectCategoria() {
          return window.location.href = '/categoria.html'
+      },
+      redirectImposto() {
+         return window.location.href = '/imposto.html'
       }
    },
    template: await importTemplate('site/components/TipoCadastro.vue')

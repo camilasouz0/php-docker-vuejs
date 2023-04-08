@@ -19,8 +19,8 @@
                         </button>
                      </div>
                      <div class="col-md-3">
-                        <button type="button" class="btn btn-outline-primary btn-block btn-round">
-                           <i class="fa-solid fa-money-check-dollar"></i> Motivo deson. ICMS
+                        <button type="button" @click="redirectImposto()" class="btn btn-outline-primary btn-block btn-round">
+                           <i class="fa fa-money fa-2x"></i> Imposto
                         </button>
                      </div>
                   </div>
