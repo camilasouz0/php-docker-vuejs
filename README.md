@@ -1,4 +1,4 @@
-# PROJETO SOFTEXPERT #
+# PHP + DOCKER + VUEJS #
     Se trata de um projeto de mercado que realiza cadastro de produtos e valores percentuais de imposto.
 
 ### Objetivo
